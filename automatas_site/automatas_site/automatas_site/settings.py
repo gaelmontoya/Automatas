@@ -11,7 +11,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'clave-insegura-para-desarrollo')
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 # Hosts permitidos
-ALLOWED_HOSTS = ['automatas-site.onrender.com']  # Reemplaza con tu dominio exacto en Render
+ALLOWED_HOSTS = ['automatas-1.onrender.com']  # ← Dominio correcto según Render
 
 # Application definition
 INSTALLED_APPS = [
