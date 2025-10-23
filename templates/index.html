@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>MiniLang Simple</title>
+  <style>
+    body {
+      font-family: monospace;
+      background-color: #222;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: #333;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      width: 350px;
+    }
+
+    h1 {
+      margin-bottom: 15px;
+      font-size: 1.5em;
+      color: #ffcc00;
+    }
+
+    input {
+      width: 80%;
+      padding: 8px;
+      margin: 5px 0;
+      border-radius: 5px;
+      border: none;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 15px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #ffcc00;
+      color: #222;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    pre {
+      margin-top: 15px;
+      background-color: #111;
+      color: #0f0;
+      padding: 10px;
+      border-radius: 5px;
+      white-space: pre-wrap;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>MiniLang Simple</h1>
+    <input type="number" id="xInput" placeholder="Ingresa x"><br>
+    <input type="number" id="yInput" placeholder="Ingresa y"><br>
+    <button id="runBtn">Ejecutar</button>
+    <pre id="output"></pre>
+  </div>
+
+  <script>
+    document.getElementById("runBtn").addEventListener("click", async () => {
+      const x = document.getElementById("xInput").value;
+      const y = document.getElementById("yInput").value;
+
+      if (x === "" || y === "") {
+        alert("Por favor ingresa ambos valores");
+        return;
+      }
+
+      const code = `x = ${x}\ny = ${y}\nz = x * y + 10\nprint(z)\nx = x + 1\nprint(x)`;
+
+      const res = await fetch("/run", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({code})
+      });
+
+      const data = await res.json();
+      document.getElementById("output").textContent = data.result || data.error;
+    });
+  </script>
+</body>
+</html>
